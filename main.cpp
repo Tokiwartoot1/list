@@ -18,17 +18,7 @@ private:
     ListMem *item=0;
     friend class List;
 };
-Iterator List::begin()
-{
-    Iterator iter;
-    iter.item=head;
-    return iter;
-}
 
-Iterator List::end()
-{
-    return Iterator();
-}
 void Iterator::setValue(int a)
 {
     item->listvalue=a;
@@ -44,20 +34,36 @@ int Iterator::value()
     return item->listvalue;
 }
 
+
 bool Iterator::equal(Iterator &other)
 {
     return item ==other.item;
 }
 class List
 {
+
 public:
     void push(int a);
+    void insert(int field,int indx);
+    void insertatposition();
     Iterator begin();
     Iterator end();
+
 private:
     ListMem *cur=0;
     ListMem *head=0;
 };
+Iterator List::begin()
+{
+    Iterator iter;
+    iter.item=head;
+    return iter;
+}
+
+Iterator List::end()
+{
+    return Iterator();
+}
 
 void List::push(int a)
 {
@@ -68,7 +74,25 @@ void List::push(int a)
     item->listvalue=a;
     item->next=head;
     head = item;
+
 }
+
+void List::insertatposition()
+{
+    int a,b;
+    cin>>a>>b;
+    ListMem *head; // указатель на начало списка. В нём должен быть адресс начала списка.
+    ListMem *ptr =head;
+    for(int i=0;i<=a;i++)
+    {
+        if(i==a)
+        ptr -> listvalue = b; // присвоение значения переменной элемента списка.
+        ptr = ptr -> next; // в ptr адресс следующего элемента списка.
+    }
+}
+
+
+
 
 
 void input(List &list)
@@ -79,8 +103,10 @@ void input(List &list)
     {
         cin>>x;
         list.push(x);
+
     }
 }
+
 
 
 bool stringEqual(Iterator conteinerFrom,Iterator conteinerEnd,Iterator innerBegin,Iterator innerEnd)
